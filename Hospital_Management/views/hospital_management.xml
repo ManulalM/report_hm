@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="hospital_management_view_tree" model="ir.ui.view">
+        <field name="name">hospital.management.tree</field>
+        <field name="model">hospital.management</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="patient_id"/>
+                <field name="name_id"/>
+                <field name="dob"/>
+                <field name="age"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hospital_management_view_search" model="ir.ui.view">
+        <field name="name">hospital.management.search</field>
+        <field name="model">hospital.management</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name_id"
+                       filter_domain="['|','|',('name_id', 'ilike', self),('age', 'ilike', self),
+                       ('gender', 'ilike', self)]"/>
+                <field name="age"/>
+                <field name="gender"/>
+<!--                <field name="doctor_id"/>-->
+                <filter name="filter_blood_group b+ve" string="B+ve"
+                        domain="[('blood_group', '=', 'b+ve')]"/>
+                <filter name="filter_blood_group a+ve" string="A+ve"
+                        domain="[('blood_group','=', 'a+ve')]"/>
+                <filter name="filter_blood_group o+ve" string="O+ve"
+                        domain="[('blood_group','=', 'o+ve')]"/>
+                <group>
+                    <filter name="group_by_dob" string="DOB"
+                            context="{'group_by':'dob'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <!--    Patient card-->
+    <record id="hospital_management_view_form" model="ir.ui.view">
+        <field name="name">hospital.management.form</field>
+        <field name="model">hospital.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="HM_Title">
+                        <h1>
+                            <field name="patient_id" readonly="1"></field>
+                            <br></br>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name_id"></field>
+                            <field name="dob" string="Date of Birth"></field>
+                            <field name="age" string="Age"></field>
+                        </group>
+                        <group>
+                            <field name="address" string="Address"></field>
+                            <field name="contact" string="Contact number"></field>
+                            <field name="blood_group" string="Blood group"></field>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="History">
+                            <field name="medicine_ids">
+                                <tree>
+                                    <field name="date"/>
+                                    <field name="tocken"/>
+                                    <field name="doctor_id"/>
+                                </tree>
+                            </field>
+
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!--action-->
+    <record id="hospital_management_action" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.management</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Patient record!
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <record id="consult_menu_view_tree" model="ir.ui.view">
+            <field name="name">consult.menu.OP.tree</field>
+            <field name="model">consult.menu</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="patients_id"></field>
+                    <field name="date"></field>
+                </tree>
+            </field>
+        </record>
+
+        <record id="consult_menu_view_search" model="ir.ui.view">
+        <field name="name">consult.menu.search</field>
+        <field name="model">consult.menu</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="patients_id"
+                       filter_domain="['|','|',('patients_id', 'ilike', self),('type', 'ilike', self),
+                       ('departments_id', 'ilike', self)]"/>
+                <field name="patients_id"/>
+                <field name="type"/>
+                <field name="departments_id"/>
+                <filter name="filter_type" string="OP"
+                        domain="[('type', '=', 'op')]"/>
+                <filter name="filter_draft" string="IP"
+                        domain="[('type','=', 'ip')]"/>
+                <group>
+                    <filter name="group_by_dept" string="Patients"
+                            context="{'group_by':'patients_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="consult_menu_view_form" model="ir.ui.view">
+        <field name="name">hospital.management.consultation.form</field>
+        <field name="model">consult.menu</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <div class="HM_Title">
+                            <h1>
+                                Consultation
+                            </h1>
+                        </div>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="patients_id"/>
+                            <field name="type"/>
+                            <field name="doctor_id"/>
+                            <field name="diagnose"/>
+                        </group>
+                        <group>
+                            <field name="departments_id"/>
+                            <field name="date"/>
+                            <field name="disease_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Treatment">
+                            <field name="treatment1_ids">
+                                <tree>
+                                    <field name="medicines"/>
+                                    <field name="dose"/>
+                                    <field name="days"/>
+                                    <field name="description"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="consult_menu_action" model="ir.actions.act_window">
+        <field name="name">Consulatation</field>
+        <field name="res_model">consult.menu</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your OP Ticket!
+            </p>
+        </field>
+    </record>
+</odoo>

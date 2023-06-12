@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="patient_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="text-center">
+                        <h1>Medical Report</h1>
+                        <h2>
+                            <span t-esc="form['token']"/>
+                            <span t-esc="form['patients_id'][1]"/>
+                        </h2>
+                    </div>
+                    <div>
+                        <strong>Doctor Name:</strong>
+                        <span t-esc="form['doct_id'][1]"/>
+                    </div>
+                    <br></br>
+                    <div>
+                        <strong>From Date:</strong>
+                        <span t-esc="form['from_dates']"/>
+                    </div>
+                    <br></br>
+                    <div>
+                        <strong>To Date:</strong>
+                        <span t-esc="form['to_date']"/>
+                    </div>
+                    <br></br>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Sno</th>
+                                <th>OP</th>
+                                <th>Patient Name</th>
+                                <th>Date</th>
+                                <th>Doctor</th>
+<!--                                <th>Department</th>-->
+                                <th>Disease</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="ticket" t-as="line">
+                                <tr>
+                                    <td>
+                                        <span t-esc="line_index + 1"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.get('tocken')"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.get('patient_name')"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.get('date')"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.get('doctor_name')"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.get('disease_name')"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

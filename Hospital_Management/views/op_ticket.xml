@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="op_ticket_view_tree" model="ir.ui.view">
+        <field name="name">hospital.management.OP.tree</field>
+        <field name="model">op.ticket</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name_id"/>
+                <field name="date"/>
+                <field name="age"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="op_ticket_view_search" model="ir.ui.view">
+        <field name="name">op.ticket.search</field>
+        <field name="model">op.ticket</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name_id"
+                       filter_domain="['|','|',('name_id', 'ilike', self),('age', 'ilike', self),
+                       ('gender', 'ilike', self)]"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="doctor_id"/>
+                <filter name="filter_op" string="OP"
+                        domain="[('state', '=', 'op')]"/>
+                <filter name="filter_draft"
+                        string="Draft"
+                        domain="[('state','=', 'draft')]"/>
+                <group>
+                    <filter name="group_by_state" string="state"
+                            context="{'group_by':'state'}"/>
+                    <filter name="group_by_doctor_id" string="Doctor"
+                            context="{'group_by':'doctor_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="op_ticket_view_form" model="ir.ui.view">
+        <field name="name">hospital.management.OP.form</field>
+        <field name="model">op.ticket</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button id="action_confirm" name="action_confirm" type="object"
+                            class="btn btn-primary">Confirm
+                    </button>
+                    <button id="fee_payment" name="fee_payment" type="object"
+                            class="btn btn-primary">Pay <Fee></Fee>
+                    </button>
+                    <field name="state" widget="statusbar" options="{'clickable':'1'}"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Paid" bg_color="bg-success"
+                            attrs="{'invisible':[('boolean_field', '!=', True)]}"/>
+                    <div class="HM_Title">
+                        <h1>
+                            OP TICKETS
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_card_id"/>
+                            <field name="name_id"/>
+                            <field name="age"/>
+                            <field name="date"/>
+                            <field name="department_id"/>
+                            <field name="diseases_id"/>
+                            <field name="boolean_field" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="blood_group"/>
+                            <field name="gender"/>
+                            <field name="doctor_id"/>
+                            <field name="tocken"/>
+                            <field name="fee"/>
+                            <field name="company_id" invisible="1"></field>
+                            <field name="company_currency_id"></field>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="op_ticket_action" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="res_model">op.ticket</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your OP Ticket!
+            </p>
+        </field>
+    </record>
+</odoo>

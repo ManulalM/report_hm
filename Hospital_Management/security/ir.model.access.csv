@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hospital_management,access.hospital.management,model_hospital_management,Hospital_Management.securtity_groups_receptionist,1,1,1,1
+access_form_details,access.form.details,model_form_details,Hospital_Management.securtity_groups_receptionist,1,1,1,1
+access_op_ticket,access.op.ticket,model_op_ticket,Hospital_Management.securtity_groups_receptionist,1,1,1,1
+access_consult_menu,access.consult.menu,model_consult_menu,Hospital_Management.securtity_groups_receptionist,1,1,1,1
+access_disease_menu,access.disease.menu,model_disease_menu,Hospital_Management.securtity_groups_doctors,1,1,1,1
+access_disease_menu_rec,access.disease.menu,model_disease_menu,Hospital_Management.securtity_groups_receptionist,1,1,1,1
+access_appointment_menu_receptionist,access.appointment.menu,model_appointment_menu,Hospital_Management.securtity_groups_receptionist,1,1,1,1
+access_appointment_menu_doctor,access.appointment.menu,model_appointment_menu,Hospital_Management.securtity_groups_doctors,1,0,0,0
+access_hr_employee,access.hr.employee,model_hr_employee,,1,1,1,1
+access_patient_report,access.patient.report,model_patient_report,Hospital_Management.securtity_groups_receptionist,1,1,1,1

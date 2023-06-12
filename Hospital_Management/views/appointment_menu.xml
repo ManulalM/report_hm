@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--    Patient card-->
+    <record id="appointment_menu_view_form" model="ir.ui.view">
+        <field name="name">appointment.menu.name</field>
+        <field name="model">appointment.menu</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button id="confirm_action" name="confirm_action" type="object"
+                            class="btn btn-primary">Confirm
+                    </button>
+                    <field name="state" widget="statusbar" options="{'clickable':'1'}"/>
+                    <button id="convert_action" name="convert_action" type="object"
+                            class="btn btn-primary">TO OP
+                    </button>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" states="op" name="action_open_op" icon="fa-users">
+                            OP
+                        </button>
+                    </div>
+                    <div class="HM_Title">
+                        <h1>
+                            Appointments
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patientcard_id"/>
+                            <field name="doctorname_id"/>
+                            <field name="datei"/>
+                        </group>
+                        <group>
+                            <field name="patientname"/>
+                            <field name="departmentname_id"/>
+                            <field name="tockens"/>
+                            <field name="move_id" invisible="1"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="appointment_menu_view_search" model="ir.ui.view">
+        <field name="name">appointment.menu.search</field>
+        <field name="model">appointment.menu</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="patientcard_id"
+                       filter_domain="['|','|',('patientcard_id', 'ilike', self),('doctorname_id', 'ilike', self),
+                       ('departmentname_id', 'ilike', self)]"/>
+                <field name="doctorname_id"/>
+                <field name="departmentname_id"/>
+                <filter name="filter_type" string="OP"
+                        domain="[('state', '=', 'op')]"/>
+                <filter name="filter_draft" string="IP"
+                        domain="[('state','=', 'draft')]"/>
+                <filter name="filter_appointment" string="Appointment"
+                        domain="[('state','=', 'appointment')]"/>
+                <group>
+                    <filter name="group_by_dept" string="Patients"
+                            context="{'group_by':'patientcard_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!--    action-->
+    <record id="appointment_menu_action" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="res_model">appointment.menu</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your Appointment!
+            </p>
+        </field>
+    </record>
+</odoo>
